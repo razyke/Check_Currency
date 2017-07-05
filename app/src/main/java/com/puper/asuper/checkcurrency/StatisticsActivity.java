@@ -1,5 +1,6 @@
 package com.puper.asuper.checkcurrency;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ public class StatisticsActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.statistics_activity);
         fm = getSupportFragmentManager();
         StatisticsFragment = fm.findFragmentById(R.id.statistics_fragment_container);

@@ -1,8 +1,12 @@
 package com.puper.asuper.checkcurrency;
 
 
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Daniil Smirnov on 27.06.2017.
@@ -18,6 +22,14 @@ public class Guess {
         this.date = date;
         this.value = value;
         id = UUID.randomUUID();
+    }
+
+    public double getDollarFromCentrobank() {
+        return dollarFromCentrobank;
+    }
+
+    public void setDollarFromCentrobank(double dollarFromCentrobank) {
+        this.dollarFromCentrobank = dollarFromCentrobank;
     }
 
     public UUID getId() {
@@ -42,49 +54,42 @@ public class Guess {
 
     public String getAnswer(){
 
+        if (date.getTime() <= System.currentTimeMillis()) {
+            if (dollarFromCentrobank == 0.0) {
+                String FD = new SimpleDateFormat("dd/MM/yyyy").format(date);
+                try {
+                    dollarFromCentrobank = new GetFromInternet().execute(FD).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Log.e(Constants.ERRORS, "[Guess] - [getAnswer] - Прервано");
+                    return "Error";
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                    Log.e(Constants.ERRORS, "[Guess] - [getAnswer] - Ошибка выполнения");
+                    return "Error";
+                }
+                if (dollarFromCentrobank == 0.0) {
+                    Log.e(Constants.ERRORS, "[Guess] - [getAnswer] - Не получили данные с ЦБ");
+                    return "Error";
+                }
+                return getTransformation(dollarFromCentrobank, value);
+            } else
+                return getTransformation(dollarFromCentrobank, value);
+        }
+
+        return "Time";
+
+    }
 
 
 
+    private String getTransformation(double Dollar, double GuessValue){
 
-
-        //value = Double.parseDouble()
-        /*Псевдокод
-
-        Если дата прогноза(DP) не настала, то указываем - результат будет известен .getDate
-
-       Если DP >= Текущей даты и dollarFromCentoBank != "" || != null;
-       ТО
-            Взять инфу с сервера у казыванием параметра где req= будет DP
-            http://www.cbr.ru/scripts/XML_daily.asp?date_req=20/06/2017
-
-           dollarFromCentroBank = http://///
-
-           ЕСЛИ
-                (DFCB)
-
-
-
-
-        double Dollar = Service.getFromInternetValueDollar
-
-            Dollar = Dollar * 10;
-            int i = (int) Math.round(Dollar);
-            Dollar = (double)i / 10;
-            Теперь полученная валюта с интернета будет иметь формать ##.#
-
-            int between = 0;
-
-            if(Dollar>value){
-            double convert1 = Dollar * 10;
-            int d =
-            }
-
-        if (Dollar==value)
-        return "Right"
-        else if(Dollar<
-         */
-
-
-        return null;
+        if (Dollar==GuessValue)
+            return "Right";
+        else if ((Dollar>GuessValue && (Dollar-GuessValue<=1.0)) || (Dollar<GuessValue &&(GuessValue-Dollar<=1.0))){
+            return "Near";
+        }else
+            return "Far";
     }
 }

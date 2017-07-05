@@ -67,15 +67,20 @@ public class GetFromInternet extends AsyncTask<String,Void,Double> {
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            Log.e(Constants.ERRORS,"[GetFromInternet] - Не указан протокол");
+            return 0.0;
         } catch (ParserConfigurationException e) {
             Log.e(Constants.ERRORS,"[GetFromInternet] - Запрашиваемая функциональность не доступна");
             e.printStackTrace();
+            return 0.0;
         } catch (SAXException e) {
             Log.e(Constants.ERRORS,"[GetFromInternet] - Последовательное чтение с XML не удалось");
             e.printStackTrace();
+            return 0.0;
         } catch (IOException e) {
             Log.e(Constants.ERRORS,"[GetFromInternet] - Не найдены входные данные");
             e.printStackTrace();
+            return 0.0;
         }
 
         return null;

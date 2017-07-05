@@ -1,8 +1,11 @@
 package com.puper.asuper.checkcurrency;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +35,9 @@ public class StatisticsFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Создаём свой Holder для удобного взаимодействия с адаптером.
+     */
     private class GuessHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private Guess guess;
@@ -50,12 +56,38 @@ public class StatisticsFragment extends Fragment {
         public void blindGuess(Guess guess){
             this.guess = guess;
             DataTextView.setText(new SimpleDateFormat("dd.MM.yyyy").format(guess.getDate()));
-            DescriptionTextView.setText(guess.getAnswer());
+            String answer = guess.getAnswer();
+
+            if (answer.equals("Time"))
+                setDTV("Waiting",Color.GRAY);
+            else if (answer.equals("Error"))
+                setDTV("Network bad",Color.BLACK);
+            else if (answer.equals("Right"))
+                //В ручную задаём оранжевый цвет.
+                setDTV(answer,Color.argb(255,255,165,0));
+            else if (answer.equals("Near"))
+                setDTV(answer,Color.GREEN);
+            else if (answer.equals("Far"))
+                setDTV(answer,Color.RED);
+        }
+
+        private void setDTV(String message, int color){
+            DescriptionTextView.setText(message);
+            DescriptionTextView.setTextColor(color);
         }
 
         @Override
         public void onClick(View v) {
-            //TODO Сделать высплывающее окно с инфой о правильнотси ответа
+            if (!(DescriptionTextView.getText().toString().equals("Waiting") ||
+                    DescriptionTextView.getText().toString().equals("Network bad"))){
+                AlertDialog ad = new AlertDialog.Builder(getActivity())
+                        .setTitle("Result")
+                        .setMessage("Your guess   "+guess.getValue()+"\n"+"\n"
+                        +"True answer   "+guess.getDollarFromCentrobank())
+                        .setPositiveButton("Ok", null)
+                        .create();
+                ad.show();
+            }
         }
     }
 
@@ -85,6 +117,10 @@ public class StatisticsFragment extends Fragment {
             return Guesses.size();
         }
     }
+
+    /**
+     *   Обновляем вид для пользователя.
+     */
 
     private void updateUI(){
         GuessLab guessLab = GuessLab.get(getActivity());

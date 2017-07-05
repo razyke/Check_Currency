@@ -6,33 +6,29 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
-import android.widget.TextView;
 
 /**
- * Created by Daniil Smirnov on 27.06.2017.
+ * Created by Daniil Smirnov on 05.07.2017.
  * All copy registered MF.
  */
-public class MainActivity extends FragmentActivity {
+public class GuessActivity extends FragmentActivity {
 
     private FragmentManager fm;
-    private Fragment MainFragment;
-
-
+    private Fragment GuessFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.guess_activity);
 
         fm = getSupportFragmentManager();
-        MainFragment = fm.findFragmentById(R.id.frame_container);
-        if (MainFragment==null){
-            MainFragment = new MainFragment();
+        GuessFragment = fm.findFragmentById(R.id.guess_activity_container);
+        if (GuessFragment==null){
+            GuessFragment = new GuessFragment();
             fm.beginTransaction()
-                    .add(R.id.frame_container,MainFragment)
+                    .add(R.id.guess_activity_container,GuessFragment)
                     .commit();
         }
 

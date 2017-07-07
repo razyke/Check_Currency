@@ -12,7 +12,7 @@
 
     >
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".Activitys.MainActivity"
         android:screenOrientation="locked">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,10 +20,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".StatisticsActivity"
+        <activity android:name=".Activitys.StatisticsActivity"
         android:screenOrientation="locked"/>
 
-        <activity android:name=".GuessActivity"
+        <activity android:name=".Activitys.GuessActivity"
         android:screenOrientation="locked"/>
 
     </application>

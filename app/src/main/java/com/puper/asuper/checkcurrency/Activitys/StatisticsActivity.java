@@ -1,4 +1,4 @@
-package com.puper.asuper.checkcurrency;
+package com.puper.asuper.checkcurrency.Activitys;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -6,36 +6,32 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
-import android.widget.TextView;
+import com.puper.asuper.checkcurrency.R;
+import com.puper.asuper.checkcurrency.Fragments.StatisticsFragment;
 
 /**
  * Created by Daniil Smirnov on 27.06.2017.
  * All copy registered MF.
  */
-public class MainActivity extends FragmentActivity {
+public class StatisticsActivity extends FragmentActivity {
 
+    private Fragment StatisticsFragment;
     private FragmentManager fm;
-    private Fragment MainFragment;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        setContentView(R.layout.main_activity);
-
+        setContentView(R.layout.statistics_activity);
         fm = getSupportFragmentManager();
-        MainFragment = fm.findFragmentById(R.id.frame_container);
-        if (MainFragment==null){
-            MainFragment = new MainFragment();
+        StatisticsFragment = fm.findFragmentById(R.id.statistics_fragment_container);
+
+        if (StatisticsFragment == null){
+            StatisticsFragment = new StatisticsFragment();
             fm.beginTransaction()
-                    .add(R.id.frame_container,MainFragment)
+                    .add(R.id.statistics_fragment_container,StatisticsFragment)
                     .commit();
         }
-
 
     }
 }

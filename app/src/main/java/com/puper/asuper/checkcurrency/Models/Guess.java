@@ -1,7 +1,9 @@
-package com.puper.asuper.checkcurrency;
+package com.puper.asuper.checkcurrency.Models;
 
 
 import android.util.Log;
+import com.puper.asuper.checkcurrency.Constants;
+import com.puper.asuper.checkcurrency.GetFromInternet;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,9 +21,13 @@ public class Guess {
     private double dollarFromCentrobank;
 
     public Guess(Date date, double value){
+        this(UUID.randomUUID());
         this.date = date;
         this.value = value;
-        id = UUID.randomUUID();
+    }
+
+    public Guess(UUID id){
+        this.id = id;
     }
 
     public double getDollarFromCentrobank() {
@@ -52,6 +58,21 @@ public class Guess {
         this.value = value;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Guess guess = (Guess) o;
+
+        return date != null ? date.equals(guess.date) : guess.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return date != null ? date.hashCode() : 0;
+    }
+
     public String getAnswer(){
 
         if (date.getTime() <= System.currentTimeMillis()) {
@@ -72,12 +93,14 @@ public class Guess {
                     Log.e(Constants.ERRORS, "[Guess] - [getAnswer] - Не получили данные с ЦБ");
                     return "Error";
                 }
+                GuessLab.get(null).updateGuess(this);
                 return getTransformation(dollarFromCentrobank, value);
             } else
                 return getTransformation(dollarFromCentrobank, value);
         }
 
         return "Time";
+
 
     }
 

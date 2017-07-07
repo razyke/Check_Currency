@@ -54,5 +54,10 @@
                 android:layout_width="130dp"
                 android:layout_alignBaseline="@+id/btn_date" android:layout_alignBottom="@+id/btn_date"
                 android:layout_toLeftOf="@+id/btn_ok_for_value" android:layout_toStartOf="@+id/btn_ok_for_value"/>
+        <Button
+                android:text="Submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" android:layout_marginBottom="114dp" android:id="@+id/btn_submit"/>
     </RelativeLayout>
 </LinearLayout>

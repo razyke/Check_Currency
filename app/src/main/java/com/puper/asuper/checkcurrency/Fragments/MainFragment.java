@@ -1,4 +1,4 @@
-package com.puper.asuper.checkcurrency;
+package com.puper.asuper.checkcurrency.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import com.puper.asuper.checkcurrency.Activitys.GuessActivity;
+import com.puper.asuper.checkcurrency.Activitys.StatisticsActivity;
+import com.puper.asuper.checkcurrency.R;
 
 /**
  * Created by Daniil Smirnov on 27.06.2017.

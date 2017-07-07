@@ -1,4 +1,4 @@
-package com.puper.asuper.checkcurrency;
+package com.puper.asuper.checkcurrency.Fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.puper.asuper.checkcurrency.Models.GuessLab;
+import com.puper.asuper.checkcurrency.R;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +19,8 @@ import java.util.Date;
  */
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
+
+    private static String giveDate;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -41,16 +45,27 @@ public class DatePickerFragment extends DialogFragment
 
     }
 
+    public static void setGiveDate(String giveDate) {
+        DatePickerFragment.giveDate = giveDate;
+    }
+
+    public static String getGiveDate() {
+
+        return giveDate;
+    }
+
     @Override
+
     public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
         month++;
         String date = String.format("%02d/%02d/%d",day,month,year);
-        Date fromCalendar = GuessLab.fortestgetDate(date);
+        Date fromCalendar = GuessLab.forRightDate(date);
         if (new Date().getTime()>=fromCalendar.getTime()){
             Toast.makeText(getActivity(),"Write correct date",Toast.LENGTH_SHORT).show();
         }else {
             TextView tv = (TextView) getActivity().findViewById(R.id.for_date_set);
-            tv.setText("Date " + day + "-" + month + "-" + year);
+            tv.setText("Date = " + day + "-" + month + "-" + year);
+            giveDate = date;
         }
     }
 }

@@ -1,6 +1,5 @@
-package com.puper.asuper.checkcurrency;
+package com.puper.asuper.checkcurrency.Fragments;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.puper.asuper.checkcurrency.Models.Guess;
+import com.puper.asuper.checkcurrency.Models.GuessLab;
+import com.puper.asuper.checkcurrency.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -133,6 +135,5 @@ public class StatisticsFragment extends Fragment {
             guessAdapter.notifyDataSetChanged();
         }
     }
-
 
 }
